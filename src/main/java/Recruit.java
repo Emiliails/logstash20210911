@@ -9,6 +9,25 @@ public class Recruit implements Serializable {
     private String jobLabel;
     private Integer useFlag;
     private Date publishDate;
+    private String positionName;
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public Recruit(String companyName, String positionName) {
+        this.companyName = companyName;
+        this.positionName = positionName;
+    }
+
+    public Recruit(String companyName) {
+        this.companyName = companyName;
+    }
+
 
     public Long getID() {
         return ID;
