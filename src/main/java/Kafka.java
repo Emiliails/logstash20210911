@@ -71,6 +71,9 @@ public class Kafka {
                 put.addColumn(Bytes.toBytes("cf1"),Bytes.toBytes("jobSalary"),Bytes.toBytes(recruit.getJOB_SALARY()));
                 put.addColumn(Bytes.toBytes("cf1"),Bytes.toBytes("maxSalary"),Bytes.toBytes(recruit.getMaxSalary()));
                 put.addColumn(Bytes.toBytes("cf1"),Bytes.toBytes("minSalary"),Bytes.toBytes(recruit.getMinSalary()));
+
+                put.addColumn(Bytes.toBytes("cf1"),Bytes.toBytes("positionName"),Bytes.toBytes(recruit.getPositionName()));
+
                 // 将处理后的Put对象添加到集合中
                 try {
                     table.put(put);

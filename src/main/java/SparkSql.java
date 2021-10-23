@@ -37,7 +37,9 @@ public class SparkSql {
             Long id = Bytes.toLong(t._1.get());
             String companyName = Bytes.toString(t._2.getValue("cf1".getBytes(),"companyName".getBytes()));
             String positionName = Bytes.toString(t._2.getValue("cf1".getBytes(),"positionName".getBytes()));
-            return new Recruit(companyName,positionName);
+
+            String jobSalary = Bytes.toString(t._2.getValue("cf1".getBytes(),"jobSalary".getBytes()));
+            return new Recruit(companyName,positionName,jobSalary);
         });
 
         Dataset<Row> dataFrame = spark.createDataFrame(recruitJavaRDD,Recruit.class);
@@ -45,6 +47,24 @@ public class SparkSql {
                 .createOrReplaceTempView("recruit");
         spark.sql("select * from recruit")
                 .show();
+
+        Properties prop = new Properties();
+        prop.setProperty("user","root");
+        prop.setProperty("password","7wtB6{W?f(vxtVkM");
+        spark.sql("select positionName as COUNT_NAME,count(companyName) as COUNT_NUM," +
+                        "'岗位' as ITEM,1 as ITEM_FLAG from recruit " +
+                        "where positionName is not null " +
+                        "group by positionName " +
+                        "order by count_num desc " +
+                        "limit 10")
+                .write().mode("append").jdbc("jdbc:mysql://localhost:3306/RECRUIT","RECRUIT_COUNT",prop);
+
+        spark.sql("select companyName as COUNT_NAME,count(JOB_SALARY) as COUNT_NUM," +
+                        "'公司' as ITEM,2 as ITEM_FLAG from recruit " +
+                        "group by companyName " +
+                        "order by count_num desc " +
+                        "limit 10")
+                .write().mode("append").jdbc("jdbc:mysql://localhost:3306/RECRUIT","RECRUIT_COUNT",prop);
     }
 
 }

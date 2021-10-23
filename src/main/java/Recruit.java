@@ -11,12 +11,31 @@ public class Recruit implements Serializable {
     private Date publishDate;
     private String positionName;
 
+    public Recruit(Long ID, String companyName, String jobName, String jobLabel, Integer useFlag, Date publishDate, String positionName, String JOB_SALARY, String maxSalary, String minSalary) {
+        this.ID = ID;
+        this.companyName = companyName;
+        this.jobName = jobName;
+        this.jobLabel = jobLabel;
+        this.useFlag = useFlag;
+        this.publishDate = publishDate;
+        this.positionName = positionName;
+        this.JOB_SALARY = JOB_SALARY;
+        this.maxSalary = maxSalary;
+        this.minSalary = minSalary;
+    }
+
     public String getPositionName() {
         return positionName;
     }
 
     public void setPositionName(String positionName) {
         this.positionName = positionName;
+    }
+
+    public Recruit(String companyName, String positionName, String JOB_SALARY) {
+        this.companyName = companyName;
+        this.positionName = positionName;
+        this.JOB_SALARY = JOB_SALARY;
     }
 
     public Recruit(String companyName, String positionName) {
